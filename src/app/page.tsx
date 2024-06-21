@@ -1,113 +1,465 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import React, { useState, useEffect, ChangeEvent } from "react";
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+interface Task {
+  id: number;
+  title: string;
+  parentId: number | null;
+  children: Task[];
 }
+
+interface MoveSubtaskProps {
+  taskId: number;
+  tasks: Task[];
+  onMoveSubtask: (subtaskId: number, newParentId: number) => void;
+}
+
+const MoveSubtaskComponent: React.FC<MoveSubtaskProps> = ({
+  taskId,
+  tasks,
+  onMoveSubtask,
+}) => {
+  const [newParentId, setNewParentId] = useState<number | null>(null);
+
+  const handleMoveSubtask = () => {
+    if (newParentId !== null) {
+      onMoveSubtask(taskId, newParentId);
+      setNewParentId(null);
+    }
+  };
+
+  return (
+    <div className="mt-2">
+      <select
+        value={newParentId ?? ""}
+        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+          setNewParentId(Number(e.target.value))
+        }
+        className="p-1 border"
+      >
+        <option value="">Выберите новую родительскую задачу</option>
+        {tasks
+          .filter((task) => task.id !== taskId)
+          .map((task) => (
+            <option key={task.id} value={task.id}>
+              {task.title}
+            </option>
+          ))}
+      </select>
+      <button
+        onClick={handleMoveSubtask}
+        className="ml-2 p-1 bg-yellow-500 text-white"
+      >
+        Переместить подзадачу
+      </button>
+    </div>
+  );
+};
+
+interface TaskComponentProps {
+  task: Task;
+  tasks: Task[];
+  onAddSubtask: (parentId: number, title: string) => void;
+  onDeleteTask: (id: number) => void;
+  onChangeTask: (id: number, title: string) => void;
+  onMoveSubtask: (subtaskId: number, newParentId: number) => void;
+}
+
+const TaskComponent: React.FC<TaskComponentProps> = ({
+  task,
+  tasks,
+  onAddSubtask,
+  onDeleteTask,
+  onChangeTask,
+  onMoveSubtask,
+}) => {
+  const [subtaskTitle, setSubtaskTitle] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
+  const [newTitle, setNewTitle] = useState(task.title);
+
+  const handleAddSubtask = () => {
+    onAddSubtask(task.id, subtaskTitle);
+    setSubtaskTitle("");
+  };
+
+  const handleEditTask = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveTask = () => {
+    onChangeTask(task.id, newTitle);
+    setIsEditing(false);
+  };
+
+  const handleMoveClick = () => {
+    setIsMoving(!isMoving);
+  };
+
+  return (
+    <li>
+      <div>
+        {isEditing ? (
+          <input
+            type="text"
+            value={newTitle}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setNewTitle(e.target.value)
+            }
+            className="mt-2 p-1 border"
+          />
+        ) : (
+          <span>{task.title}</span>
+        )}
+        <button
+          onClick={() => onDeleteTask(task.id)}
+          className="ml-2 p-1 bg-red-500 text-white"
+        >
+          Удалить
+        </button>
+        <button
+          onClick={isEditing ? handleSaveTask : handleEditTask}
+          className="ml-2 p-1 bg-blue-500 text-white"
+        >
+          {isEditing ? "Сохранить" : "Изменить"}
+        </button>
+        <button
+          onClick={handleMoveClick}
+          className="ml-2 p-1 bg-yellow-500 text-white"
+        >
+          {isMoving ? "Отменить" : "Переместить"}
+        </button>
+      </div>
+      {isMoving && (
+        <MoveSubtaskComponent
+          taskId={task.id}
+          tasks={tasks}
+          onMoveSubtask={onMoveSubtask}
+        />
+      )}
+      <input
+        type="text"
+        value={subtaskTitle}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setSubtaskTitle(e.target.value)
+        }
+        placeholder="Название подзадачи"
+        className="mt-2 p-1 border"
+      />
+      <button
+        onClick={handleAddSubtask}
+        className="ml-2 p-1 bg-green-500 text-white"
+      >
+        Добавить подзадачу
+      </button>
+      {task.children && task.children.length > 0 && (
+        <ul className="ml-4 mt-2">
+          {task.children.map((subTask) => (
+            <TaskComponent
+              key={subTask.id}
+              task={subTask}
+              tasks={tasks}
+              onAddSubtask={onAddSubtask}
+              onDeleteTask={onDeleteTask}
+              onChangeTask={onChangeTask}
+              onMoveSubtask={onMoveSubtask}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+};
+
+const Page: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [taskTitle, setTaskTitle] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("/api/tasks");
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error("Ошибка при загрузке задач:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTasks();
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleAddTask = async () => {
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: taskTitle }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка при добавлении задачи");
+      }
+
+      const newTask = await response.json();
+      setTasks([...tasks, newTask]);
+      setTaskTitle("");
+    } catch (error) {
+      console.error("Ошибка при добавлении задачи:", error);
+    }
+  };
+
+  const handleAddSubtask = async (parentId: number, title: string) => {
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, parentId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка при добавлении подзадачи");
+      }
+
+      const newSubtask = await response.json();
+
+      const addSubtaskToParent = (
+        tasks: Task[],
+        parentId: number,
+        subtask: Task
+      ): Task[] => {
+        return tasks.map((task) => {
+          if (task.id === parentId) {
+            return {
+              ...task,
+              children: [...(task.children || []), subtask],
+            };
+          } else {
+            return {
+              ...task,
+              children: addSubtaskToParent(
+                task.children || [],
+                parentId,
+                subtask
+              ),
+            };
+          }
+        });
+      };
+
+      setTasks(addSubtaskToParent(tasks, parentId, newSubtask));
+    } catch (error) {
+      console.error("Ошибка при добавлении подзадачи:", error);
+    }
+  };
+
+  const handleDeleteTask = async (id: number) => {
+    try {
+      await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+      });
+
+      const removeTaskById = (tasks: Task[], id: number): Task[] => {
+        return tasks
+          .filter((task) => task.id !== id)
+          .map((task) => ({
+            ...task,
+            children: removeTaskById(task.children || [], id),
+          }));
+      };
+
+      setTasks(removeTaskById(tasks, id));
+    } catch (error) {
+      console.error("Ошибка при удалении задачи:", error);
+    }
+  };
+
+  const handleChangeTask = async (id: number, title: string) => {
+    try {
+      await fetch(`/api/tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title }),
+      });
+
+      const updateTaskTitle = (
+        tasks: Task[],
+        id: number,
+        title: string
+      ): Task[] => {
+        return tasks.map((task) => {
+          if (task.id === id) {
+            return { ...task, title };
+          } else {
+            return {
+              ...task,
+              children: updateTaskTitle(task.children || [], id, title),
+            };
+          }
+        });
+      };
+
+      setTasks(updateTaskTitle(tasks, id, title));
+    } catch (error) {
+      console.error("Ошибка при изменении задачи:", error);
+    }
+  };
+
+  const handleMoveSubtask = async (subtaskId: number, newParentId: number) => {
+    try {
+      const response = await fetch(`/api/tasks/${subtaskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ parentId: newParentId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка при перемещении подзадачи");
+      }
+
+      const updateSubtaskParent = (
+        tasks: Task[],
+        subtaskId: number,
+        newParentId: number
+      ): Task[] => {
+        let subtaskToMove: Task | null = null;
+
+        const removeSubtaskById = (tasks: Task[], id: number): Task[] => {
+          return tasks
+            .filter((task) => {
+              if (task.id === id) {
+                subtaskToMove = task;
+                return false;
+              }
+              return true;
+            })
+            .map((task) => ({
+              ...task,
+              children: removeSubtaskById(task.children || [], id),
+            }));
+        };
+
+        const addSubtaskToParent = (
+          tasks: Task[],
+          parentId: number,
+          subtask: Task
+        ): Task[] => {
+          return tasks.map((task) => {
+            if (task.id === parentId) {
+              return {
+                ...task,
+                children: [...(task.children || []), subtask],
+              };
+            } else {
+              return {
+                ...task,
+                children: addSubtaskToParent(
+                  task.children || [],
+                  parentId,
+                  subtask
+                ),
+              };
+            }
+          });
+        };
+
+        const newTasks = removeSubtaskById(tasks, subtaskId);
+
+        if (subtaskToMove) {
+          return addSubtaskToParent(newTasks, newParentId, subtaskToMove);
+        }
+
+        return tasks;
+      };
+
+      setTasks(updateSubtaskParent(tasks, subtaskId, newParentId));
+    } catch (error) {
+      console.error("Ошибка при перемещении подзадачи:", error);
+    }
+  };
+
+  return (
+    <div className="container">
+      {loading && (
+        <div className="boxes">
+          <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
+      {!loading && (
+        <>
+          <input
+            type="text"
+            value={taskTitle}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setTaskTitle(e.target.value)
+            }
+            placeholder="Название задачи"
+            className="mt-2 p-1 border"
+          />
+          <button
+            onClick={handleAddTask}
+            className="ml-2 p-1 bg-blue-500 text-white"
+          >
+            Добавить задачу
+          </button>
+          <ul className="mt-4">
+            {tasks.map((task) => (
+              <TaskComponent
+                key={task.id}
+                task={task}
+                tasks={tasks}
+                onAddSubtask={handleAddSubtask}
+                onDeleteTask={handleDeleteTask}
+                onChangeTask={handleChangeTask}
+                onMoveSubtask={handleMoveSubtask}
+              />
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Page;
